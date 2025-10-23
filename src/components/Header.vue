@@ -7,13 +7,21 @@
     <!-- 기본 메뉴 -->
     <span v-else>
       <router-link to="/login">로그인</router-link>│
-      <router-link to="/signup">회원가입</router-link>
-    </span>
+      <router-link to="/signup">회원가입</router-link> </span
+    >│
+    <!-- 다크 모드 버튼 -->
+    <button class="theme-btn" @click="toggleTheme">
+      {{ isDark ? "🌙 다크 모드" : "☀️ 라이트 모드" }}
+    </button>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+
+// 다크 모드 설정
+const isDark = ref(false);
+const THEME_KEY = "theme";
 
 const loggedInUser = ref(null);
 // 로그인 상태 체크
@@ -24,7 +32,33 @@ const checkLogin = () => {
 // 페이지가 열릴 때 한 번 실행
 onMounted(() => {
   checkLogin();
+  // 다크 모드 설정
+  // 로컬에서 테마 불러오기
+  const savedTheme = localStorage.getItem("THEME_KEY");
+  isDark.value = savedTheme === "dark";
 });
+// 다크 모드 적용
+watch(
+  isDark,
+  (val) => {
+    // console.log(val);
+    const el = document.documentElement;
+    // console.log(el);  // html 전체를 뜻함
+
+    if (val) {
+      el.classList.add("dark");
+      localStorage.setItem(THEME_KEY, "dark");
+    } else {
+      el.classList.remove("dark");
+      localStorage.setItem(THEME_KEY, "light");
+    }
+  },
+  { immediate: true }
+);
+// 다크 모드 버튼 클릭
+const toggleTheme = () => {
+  isDark.value = !isDark.value;
+};
 // 로그아웃
 const logout = () => {
   localStorage.removeItem("loggedInUser");
@@ -32,4 +66,12 @@ const logout = () => {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+button {
+  border: none;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background-color: #0a66c2;
+  color: #fff;
+}
+</style>

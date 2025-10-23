@@ -53,4 +53,13 @@ const saveReservation = () => {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+button {
+  margin: 0 5px;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background-color: #0a66c2;
+  color: #fff;
+}
+</style>

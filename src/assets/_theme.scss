@@ -1,0 +1,26 @@
+@use "../assets/variables" as *;
+body {
+  background-color: $bg;
+  color: $text;
+}
+html.dark {
+  body {
+    background: $dark-bg;
+    color: $dark-text;
+  }
+  a {
+    color: $dark-text;
+  }
+
+  .box,
+  .card,
+  .review {
+    background: $dark-box;
+  }
+
+  button,
+  .theme-btn {
+    background: $dark-button-bg;
+    color: $dark-button-text;
+  }
+}
